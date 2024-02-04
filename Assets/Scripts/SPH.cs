@@ -122,10 +122,6 @@ public class SPH : MonoBehaviour
     private void FixedUpdate()
     {
         UpdateBuffers();
-        shader.SetVector("boxSize", boxSize);
-        shader.SetFloat("timestep", timestep);
-        shader.SetVector("spherePos", collisionSphere.transform.position);
-        shader.SetFloat("sphereRadius", collisionSphere.transform.localScale.x/2);
         
         shader.Dispatch(HashParticlesKernel, 
             totalParticles/thread_number, 1, 1);
@@ -228,6 +224,11 @@ public class SPH : MonoBehaviour
         shader.SetFloat("viscosity", viscosity);
         shader.SetFloat("gasConstant", gasConstant);
         shader.SetFloat("boundDamping", boundDamping);
+        
+        shader.SetVector("boxSize", boxSize);
+        shader.SetFloat("timestep", timestep);
+        shader.SetVector("spherePos", collisionSphere.transform.position);
+        shader.SetFloat("sphereRadius", collisionSphere.transform.localScale.x/2);
     }
     
 
