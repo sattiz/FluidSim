@@ -31,7 +31,6 @@ public class SPH : MonoBehaviour
     public Vector3 spawnCenter;
     public float particleRadius = 0.1f;
     public float spawnJitter = 0.2f;
-    public float gravity_y = 9.8f;
 
     [Header("Particle Rendering")]
     public Mesh particleMesh;
@@ -47,8 +46,8 @@ public class SPH : MonoBehaviour
     public float viscosity;
     public float particleMass;
     public float gasConstant;
-    public float restingDensity;
     public float timestep;
+    public float gravity_y = 9.8f;
 
     // private variables
     private ComputeBuffer _argsBuffer;
@@ -191,7 +190,6 @@ public class SPH : MonoBehaviour
         shader.SetFloat("particleMass", particleMass);
         shader.SetFloat("viscosity", viscosity);
         shader.SetFloat("gasConstant", gasConstant);
-        shader.SetFloat("restDensity", restingDensity);
         shader.SetFloat("boundDamping", boundDamping);
         shader.SetFloat("pi", Mathf.PI);
 
@@ -229,7 +227,6 @@ public class SPH : MonoBehaviour
         shader.SetFloat("particleMass", particleMass);
         shader.SetFloat("viscosity", viscosity);
         shader.SetFloat("gasConstant", gasConstant);
-        shader.SetFloat("restDensity", restingDensity);
         shader.SetFloat("boundDamping", boundDamping);
     }
     

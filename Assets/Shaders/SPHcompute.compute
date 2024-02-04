@@ -27,7 +27,6 @@ uint particlesLength;
 float particleMass;
 float viscosity;
 float gasConstant;
-float restDensity;
 float boundDamping;
 float radius;
 float radius2;
@@ -212,7 +211,7 @@ void ComputeDencityPressure(uint id: SV_DISPATCHTHREADID)
 
                     if (radius2*0.004 > distanceSquared*0.004) {
 
-                        sum += SmoothingKernel(distanceSquared * 0.004); // Apply smoothing kernel
+                        sum += SmoothingKernel(distanceSquared * 0.004);
 
                     }
                     
@@ -224,7 +223,7 @@ void ComputeDencityPressure(uint id: SV_DISPATCHTHREADID)
     }
 
     _particles[particleIndex].density = sum * particleMass + 0.000001f;
-    _particles[particleIndex].pressure = gasConstant * (_particles[particleIndex].density - restDensity);
+    _particles[particleIndex].pressure = gasConstant * (_particles[particleIndex].density);
 }
 
 [numthreads(THREAD_NUM_2P, 1, 1)]
