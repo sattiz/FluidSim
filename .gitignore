@@ -1,0 +1,9 @@
+.idea/
+Library/
+Logs/
+obj/
+Temp/
+UserSettings/
+.idea/
+FluidSim.sln
+Assembly-CSharp.csproj
