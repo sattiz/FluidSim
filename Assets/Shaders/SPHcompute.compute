@@ -61,7 +61,7 @@ int3 GetCell(float3 position)
 
 inline uint HashCell(in int3 cellIndex)
 {
-    const uint p1 = 73856093; // some large primes
+    const uint p1 = 73856093;
     const uint p2 = 19349663;
     const uint p3 = 83492791;
 
@@ -151,6 +151,7 @@ void Integrate(uint id: SV_DISPATCHTHREADID)
         vel.z *= -boundDamping;
         _particles[id.x].position.z = topRight.z - radius;
     }
+    
     _particles[id.x].velocity = vel;
 }
 
@@ -210,13 +211,10 @@ void ComputeDencityPressure(uint id: SV_DISPATCHTHREADID)
                     float distanceSquared = dot(diff, diff);
 
                     if (radius2*0.004 > distanceSquared*0.004) {
-
                         sum += SmoothingKernel(distanceSquared * 0.004);
-
                     }
                     
                     neighbourIterator++;
-
                 }
             }
         }
@@ -267,7 +265,6 @@ void ComputeForces (uint3 id : SV_DISPATCHTHREADID) {
                         float3 pressureGradientDirection = normalize(_particles[particleIndex].position - particleB.position);
                         
                         float3 _pressureContribution = mass2 * SpikyKernelGradient(dist, pressureGradientDirection);
-                        // _pressureContribution *= (_particles[particleIndex].pressure / density2 + particleB.pressure / (particleB.density * particleB.density)) / 2;
                         _pressureContribution *= (_particles[particleIndex].pressure + particleB.pressure) / (density2 + particleB.density * particleB.density);
                         float3 _viscosityContribution = viscosity * mass2 * (particleB.velocity - _particles[particleIndex].velocity)/particleB.density;
                         _viscosityContribution *= SpikyKernelSecondDerivative(dist);
@@ -281,7 +278,7 @@ void ComputeForces (uint3 id : SV_DISPATCHTHREADID) {
         }
     }
 
-    _particles[particleIndex].currForce = - pressure + visc + float3(0,-gravity_y * particleMass , 0) ;
+    _particles[particleIndex].currForce = - pressure + visc + float3(0,-gravity_y * particleMass , 0);
 
     float3 colDir = _particles[particleIndex].position - spherePos;
     if (length(colDir) < sphereRadius + meshSize) {
